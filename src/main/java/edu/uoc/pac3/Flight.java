@@ -34,18 +34,14 @@ public class Flight {
         setArrivalDate(arrivalDate);
         this.NUM_MAX_PASSENGERS = numPassengers;
 
-        setId(id);
-    }
-
-    public int getNumMaxPassengers() {
-        return NUM_MAX_PASSENGERS;
+        setId();
     }
 
     public static int getNextId() {
         return nextId;
     }
 
-    public static void incNextId() {
+    private static void incNextId() {
         nextId++;
     }
 
@@ -53,8 +49,8 @@ public class Flight {
         return id;
     }
 
-    private void setId(int id) {
-        this.id = nextId;
+    private void setId() {
+        this.id = getNextId();
         incNextId();
     }
 

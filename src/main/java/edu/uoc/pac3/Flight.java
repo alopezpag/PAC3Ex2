@@ -2,7 +2,6 @@ package edu.uoc.pac3;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class Flight {
     // const
@@ -21,7 +20,7 @@ public class Flight {
     private LocalDateTime departureDate;
     private LocalDateTime arrivalDate;
     //TODO: podria ser final
-    private Passenger[] passengers;
+    private final Passenger[] passengers;
 
     public Flight(String origin, String destination, LocalDateTime departureDate, LocalDateTime arrivalDate, int numPassengers) throws IllegalArgumentException {
         if (departureDate == null || arrivalDate == null || departureDate.isAfter(arrivalDate)) {
@@ -107,7 +106,11 @@ public class Flight {
     }
 
     public boolean addPassenger(Passenger p) throws IllegalArgumentException, NullPointerException, IllegalStateException {
-        if (p == null || p.getPassport() == null) throw new NullPointerException(ERROR_NO_PASSPORT);
+        if (p == null) {
+            throw new NullPointerException(ERROR_NULL);
+        } else if (p.getPassport() == null) {
+            throw new NullPointerException(ERROR_NO_PASSPORT);
+        }
         if (containsPassenger(p)) throw new IllegalStateException(ERROR_PASSENGER_ALREADY_IN_FLIGHT);
 
         for (int pos = 0; pos < passengers.length; pos++) {
@@ -120,7 +123,7 @@ public class Flight {
     }
 
     public boolean removePassenger(Passenger p) {
-        if (p == null) throw new NullPointerException(ERROR_NO_PASSPORT);
+        if (p == null) throw new NullPointerException(ERROR_NULL);
         if (p.getPassport() == null) throw new NullPointerException(ERROR_NO_PASSPORT);
 
         int index = findPassenger(p);

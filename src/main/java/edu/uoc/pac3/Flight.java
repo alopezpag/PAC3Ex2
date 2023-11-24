@@ -12,9 +12,8 @@ public class Flight {
     public static final String ERROR_NULL = "Element is null.";
     public static final String ERROR_PASSENGER_ALREADY_IN_FLIGHT = "The passenger is already in the flight.";
     public static final String ERROR_NO_PASSPORT = "The passport is null.";
-    public final int NUM_MAX_PASSENGERS;
     private static int nextId = 1;
-
+    public final int NUM_MAX_PASSENGERS;
     // variables
     private int id;
     private String origin;
@@ -27,7 +26,8 @@ public class Flight {
         if (departureDate == null || arrivalDate == null || departureDate.isAfter(arrivalDate)) {
             throw new IllegalArgumentException(ERROR_DATES);
         }
-        //setNumMaxPassengers(numPassengers);
+
+        this.passengers = new Passenger[numPassengers];
         setOrigin(origin);
         setDestination(destination);
         setDepartureDate(departureDate);
@@ -59,7 +59,7 @@ public class Flight {
     }
 
     public void setOrigin(String origin) throws IllegalArgumentException {
-        if (origin == null || origin.isEmpty()) throw new IllegalArgumentException(ERROR_ORIGIN);
+        if (origin == null || origin.isEmpty() || origin.startsWith(" ")) throw new IllegalArgumentException(ERROR_ORIGIN);
         this.origin = origin;
     }
 
@@ -68,7 +68,7 @@ public class Flight {
     }
 
     public void setDestination(String destination) throws IllegalArgumentException {
-        if (destination == null || destination.isEmpty()) throw new IllegalArgumentException(ERROR_DESTINATION);
+        if (destination == null || destination.isEmpty() || destination.startsWith(" ")) throw new IllegalArgumentException(ERROR_DESTINATION);
         this.destination = destination;
     }
 
@@ -77,7 +77,7 @@ public class Flight {
     }
 
     public void setDepartureDate(LocalDateTime departureDate) throws IllegalArgumentException {
-        if (departureDate != null && !departureDate.isBefore(arrivalDate) && arrivalDate != null) {
+        if (departureDate != null && this.arrivalDate != null && !departureDate.isBefore(this.arrivalDate)) {
             throw new IllegalArgumentException(ERROR_DATES);
         }
         this.departureDate = departureDate;
@@ -88,11 +88,10 @@ public class Flight {
     }
 
     public void setArrivalDate(LocalDateTime arrivalDate) throws IllegalArgumentException {
-        if (arrivalDate != null && !arrivalDate.isAfter(departureDate) && departureDate != null) {
+        if (arrivalDate != null && this.departureDate != null && !arrivalDate.isAfter(this.departureDate)) {
             throw new IllegalArgumentException(ERROR_DATES);
-        } else {
-            this.arrivalDate = arrivalDate;
         }
+        this.arrivalDate = arrivalDate;
     }
 
     public Passenger[] getPassengers() {

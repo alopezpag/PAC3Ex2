@@ -20,7 +20,7 @@ public class Flight {
     private LocalDateTime departureDate;
     private LocalDateTime arrivalDate;
     private final Passenger[] passengers;
-
+    
     public Flight(String origin, String destination, LocalDateTime departureDate, LocalDateTime arrivalDate, int numPassengers) throws IllegalArgumentException {
         if (departureDate == null || arrivalDate == null || departureDate.isAfter(arrivalDate)) {
             throw new IllegalArgumentException(ERROR_DATES);

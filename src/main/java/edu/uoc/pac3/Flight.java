@@ -20,7 +20,7 @@ public class Flight {
     private String destination;
     private LocalDateTime departureDate;
     private LocalDateTime arrivalDate;
-    //podria ser final
+    //TODO: podria ser final
     private Passenger[] passengers;
 
     public Flight(String origin, String destination, LocalDateTime departureDate, LocalDateTime arrivalDate, int numPassengers) throws IllegalArgumentException {

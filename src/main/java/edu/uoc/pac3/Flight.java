@@ -19,7 +19,6 @@ public class Flight {
     private String destination;
     private LocalDateTime departureDate;
     private LocalDateTime arrivalDate;
-    //TODO: podria ser final
     private final Passenger[] passengers;
 
     public Flight(String origin, String destination, LocalDateTime departureDate, LocalDateTime arrivalDate, int numPassengers) throws IllegalArgumentException {
@@ -135,7 +134,6 @@ public class Flight {
         }
     }
 
-    //TODO: dubte -> el findPassenger() ja fa la comprovació de ERROR_NO_PASSPORT, realment està duplicada al mètode.
     public boolean containsPassenger(Passenger p) throws NullPointerException {
         if (p == null) throw new NullPointerException(ERROR_NULL);
         if (p.getPassport() == null) throw new NullPointerException(ERROR_NO_PASSPORT);

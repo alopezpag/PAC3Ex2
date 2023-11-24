@@ -20,6 +20,7 @@ public class Flight {
     private String destination;
     private LocalDateTime departureDate;
     private LocalDateTime arrivalDate;
+    //podria ser final
     private Passenger[] passengers;
 
     public Flight(String origin, String destination, LocalDateTime departureDate, LocalDateTime arrivalDate, int numPassengers) throws IllegalArgumentException {
@@ -59,7 +60,8 @@ public class Flight {
     }
 
     public void setOrigin(String origin) throws IllegalArgumentException {
-        if (origin == null || origin.isEmpty() || origin.startsWith(" ")) throw new IllegalArgumentException(ERROR_ORIGIN);
+        if (origin == null || origin.isEmpty() || origin.startsWith(" "))
+            throw new IllegalArgumentException(ERROR_ORIGIN);
         this.origin = origin;
     }
 
@@ -68,7 +70,8 @@ public class Flight {
     }
 
     public void setDestination(String destination) throws IllegalArgumentException {
-        if (destination == null || destination.isEmpty() || destination.startsWith(" ")) throw new IllegalArgumentException(ERROR_DESTINATION);
+        if (destination == null || destination.isEmpty() || destination.startsWith(" "))
+            throw new IllegalArgumentException(ERROR_DESTINATION);
         this.destination = destination;
     }
 
@@ -103,11 +106,10 @@ public class Flight {
         return Math.abs(duration.toHours() + duration.toMinutesPart() / 60.0);
     }
 
-    //TODO: fer
     public boolean addPassenger(Passenger p) throws IllegalArgumentException, NullPointerException, IllegalStateException {
-        if (p == null) throw new NullPointerException(ERROR_NO_PASSPORT);
-        if (p.getPassport() == null) throw new NullPointerException(ERROR_NO_PASSPORT);
+        if (p == null || p.getPassport() == null) throw new NullPointerException(ERROR_NO_PASSPORT);
         if (containsPassenger(p)) throw new IllegalStateException(ERROR_PASSENGER_ALREADY_IN_FLIGHT);
+
         for (int pos = 0; pos < passengers.length; pos++) {
             if (passengers[pos] == null) {
                 passengers[pos] = p;
@@ -140,16 +142,15 @@ public class Flight {
 
     private int findPassenger(Passenger passenger) throws NullPointerException {
         // returns position
-        if (passenger == null) throw new NullPointerException(ERROR_NULL);
-        else if (passenger.getPassport() == null) throw new NullPointerException(ERROR_NO_PASSPORT);
-        else {
-            for (int pos = 0; pos < passengers.length; pos++) {
-                if (Objects.equals(passengers[pos].getPassport().getPassportNumber(), passenger.getPassport().getPassportNumber())) {
-                    return pos;
-                }
-            }
+        if (passenger == null || passenger.getPassport() == null) {
             return -1;
         }
+        for (int pos = 0; pos < passengers.length; pos++) {
+            if (passengers[pos] != null && passengers[pos].getPassport().equals(passenger.getPassport())) {
+                return pos;
+            }
+        }
+        return -1;
     }
 
     public int getNumPassengers() {
